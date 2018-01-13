@@ -57,7 +57,7 @@ for event_slug, ticks in event_data.items():
 	assert(len(extended_ticks) == maxlen)
 	values.append(extended_ticks)
 
-with open('data.csv', 'wb') as fout:	
+with open('zetatwo.github.io/data.csv', 'wb') as fout:	
 	csvwriter = csv.writer(fout)
 	headers = ['date'] + event_slugs
 	csvwriter.writerow(headers)
