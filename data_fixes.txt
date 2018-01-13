@@ -1,0 +1,26 @@
+donation;new_event
+13079;agdq2012
+14079;agdq2012
+343115;agdq2017
+343118;agdq2017
+288409;sgdq2016
+170594;agdq2015
+207627;sgdq2015
+207628;sgdq2015
+22652;agdq2013
+22653;agdq2013
+38180;sgdq2013
+111436;-1
+
+UPDATE donations SET event_id = (SELECT id FROM events WHERE events.slug = 'agdq2012' LIMIT 1) WHERE id = 13079;
+UPDATE donations SET event_id = (SELECT id FROM events WHERE events.slug = 'agdq2012' LIMIT 1) WHERE id = 14079;
+UPDATE donations SET event_id = (SELECT id FROM events WHERE events.slug = 'agdq2013' LIMIT 1) WHERE id = 22652;
+UPDATE donations SET event_id = (SELECT id FROM events WHERE events.slug = 'agdq2013' LIMIT 1) WHERE id = 22653;
+UPDATE donations SET event_id = (SELECT id FROM events WHERE events.slug = 'sgdq2013' LIMIT 1) WHERE id = 38180;
+UPDATE donations SET event_id = (SELECT id FROM events WHERE events.slug = 'agdq2017' LIMIT 1) WHERE id = 343115;
+UPDATE donations SET event_id = (SELECT id FROM events WHERE events.slug = 'agdq2017' LIMIT 1) WHERE id = 343118;
+UPDATE donations SET event_id = (SELECT id FROM events WHERE events.slug = 'sgdq2016' LIMIT 1) WHERE id = 288409;
+UPDATE donations SET event_id = (SELECT id FROM events WHERE events.slug = 'agdq2015' LIMIT 1) WHERE id = 170594;
+UPDATE donations SET event_id = (SELECT id FROM events WHERE events.slug = 'sgdq2015' LIMIT 1) WHERE id = 207627;
+UPDATE donations SET event_id = (SELECT id FROM events WHERE events.slug = 'sgdq2015' LIMIT 1) WHERE id = 207628;
+DELETE FROM donations WHERE id = 111436;
