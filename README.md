@@ -22,3 +22,7 @@ Finally, view index.html, for example by using
 ```
 python -m SimpleHTTPServer
 ```
+
+## Demo
+
+You can see the results on [the GitHub page](https://zetatwo.github.io/gdq-donation-scraper).
