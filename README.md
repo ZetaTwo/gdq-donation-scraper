@@ -8,12 +8,13 @@ pip install -r requirements.txt
 
 ## Usage
 
-You don't have to run the scraper unless you want to add new data. The scraped data is already checked in as donations.db
+You don't have to run the scraper unless you want to add new data.
+The scraped data is already checked in as donations.db
 ```
 python scraper.py
 ```
 
-Then remove outliers according to data_fixes.txt and create data.csv by running.
+Then convert the SQLite database into an appropriate CSV file for display.
 ```
 python convert.py
 ```
