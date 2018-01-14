@@ -15,7 +15,7 @@ TRACKER_URL = 'https://gamesdonequick.com/tracker'
 EVENTS_URL = TRACKER_URL + '/donations/'
 DONATIONS_URL = TRACKER_URL + '/donations/%s'
 
-IGNORE_EVENTS = ['agdq2018']
+ONGOING_EVENTS = ['agdq2018']
 ROWS_PER_PAGE = 50
 RATE_LIMIT_MESSAGE = 'You are being rate limited'
 SLEEP_AMOUNT = 3
@@ -144,9 +144,6 @@ if __name__ == "__main__":
 
     events = fetch_events()
     for event_name, event_slug in events:
-        if event_slug in IGNORE_EVENTS:
-            logging.info('Skipping event "%s"', event_slug)
-            continue
         logging.info('Processing event "%s"', event_slug)
 
         event_id = store_event(db, event_name, event_slug)
@@ -156,6 +153,10 @@ if __name__ == "__main__":
         _, num_pages = process_event_page(event_page)
         estimated_num_rows = num_pages * ROWS_PER_PAGE
 
+        if event_slug in ONGOING_EVENTS:
+            logging.info('Event "%s" is ongoing, skipping last page to avoid data corruption', event_slug)
+            num_pages -= 1
+
         for page in tqdm.trange(num_pages):
             event_page = fetch_event_page(event_slug, page+1)
             try:
@@ -163,11 +164,11 @@ if __name__ == "__main__":
             except:
                 logging.error('Error in event "%s" page "%d"', event_slug, page+1)
                 raise
-            
+
             for donation in event_rows:
                 store_donation(db, event_id, donation)
-        
+
         db.commit()
-    
+
 
     close_db(db)
