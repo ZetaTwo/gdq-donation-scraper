@@ -16,7 +16,7 @@ EVENTS_URL = TRACKER_URL + '/donations/'
 DONATIONS_URL = TRACKER_URL + '/donations/%s'
 
 ONGOING_EVENTS = ['agdq2019']
-ONLY_EVENTS = []
+ONLY_EVENTS = ['agdq2018', 'sgdq2018', 'GDQX2018', 'agdq2019']
 ROWS_PER_PAGE = 50
 RATE_LIMIT_MESSAGE = 'You are being rate limited'
 SLEEP_AMOUNT = 3
