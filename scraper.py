@@ -86,7 +86,8 @@ def fetch_url_cached(url, **kwargs):
 def fetch_events():
     events_html = fetch_url_cached(EVENTS_URL)
     dom = html.document_fromstring(events_html)
-    return [(l[0].text_content(), l[2].split('/')[-1]) for l in dom.iterlinks() if l[1] == 'href' and l[2].startswith('/tracker/index/')]
+    tracker_links = [(l[0].text_content(), l[2].split('/')[-1]) for l in dom.iterlinks() if l[1] == 'href' and l[2].startswith('/tracker/index/')]
+    return [x for x in tracker_links if len(x[1]) > 0]
 
 def fetch_event_page(event, page):
     return fetch_url_cached(DONATIONS_URL % event, params={'page': page, 'sort':'time', 'order':1})
