@@ -16,6 +16,7 @@ EVENTS_URL = TRACKER_URL + '/donations/'
 DONATIONS_URL = TRACKER_URL + '/donations/%s'
 
 ONGOING_EVENTS = ['agdq2019']
+ONLY_EVENTS = []
 ROWS_PER_PAGE = 50
 RATE_LIMIT_MESSAGE = 'You are being rate limited'
 SLEEP_AMOUNT = 3
@@ -87,7 +88,10 @@ def fetch_events():
     events_html = fetch_url_cached(EVENTS_URL)
     dom = html.document_fromstring(events_html)
     tracker_links = [(l[0].text_content(), l[2].split('/')[-1]) for l in dom.iterlinks() if l[1] == 'href' and l[2].startswith('/tracker/index/')]
-    return [x for x in tracker_links if len(x[1]) > 0]
+    events = [x for x in tracker_links if len(x[1]) > 0]
+    if len(ONLY_EVENTS) > 0:
+        events = [e for e in events if e[1] in ONLY_EVENTS]
+    return events
 
 def fetch_event_page(event, page):
     return fetch_url_cached(DONATIONS_URL % event, params={'page': page, 'sort':'time', 'order':1})
