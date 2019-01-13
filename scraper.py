@@ -63,14 +63,14 @@ def store_cache(file, data):
 
     return True
 
-def fetch_url_cached(url, **kwargs):
+def fetch_url_cached(url, force=False, **kwargs):
     request = Request('GET', url, **kwargs).prepare()
     url = request.url
     
     cache_path = 'url_%s.html' % url.encode('hex')
     cached = fetch_cached(cache_path)
     
-    if not cached:
+    if not cached or force:
         logging.debug('Fetching URL: %s', url)
         time.sleep(SLEEP_AMOUNT)
         s = Session()
@@ -85,7 +85,7 @@ def fetch_url_cached(url, **kwargs):
     return data
 
 def fetch_events():
-    events_html = fetch_url_cached(EVENTS_URL)
+    events_html = fetch_url_cached(EVENTS_URL, force=True)
     dom = html.document_fromstring(events_html)
     tracker_links = [(l[0].text_content(), l[2].split('/')[-1]) for l in dom.iterlinks() if l[1] == 'href' and l[2].startswith('/tracker/index/')]
     events = [x for x in tracker_links if len(x[1]) > 0]
@@ -93,8 +93,8 @@ def fetch_events():
         events = [e for e in events if e[1] in ONLY_EVENTS]
     return events
 
-def fetch_event_page(event, page):
-    return fetch_url_cached(DONATIONS_URL % event, params={'page': page, 'sort':'time', 'order':1})
+def fetch_event_page(event, page, force=False):
+    return fetch_url_cached(DONATIONS_URL % event, force=force, params={'page': page, 'sort':'time', 'order':1})
 
 def extract_dom_row(row):
     name = row[0].text_content().strip()
@@ -153,7 +153,7 @@ if __name__ == "__main__":
 
         event_id = store_event(db, event_name, event_slug)
 
-        event_page = fetch_event_page(event_slug, 1)
+        event_page = fetch_event_page(event_slug, 1, force=True)
 
         _, num_pages = process_event_page(event_page)
         estimated_num_rows = num_pages * ROWS_PER_PAGE
