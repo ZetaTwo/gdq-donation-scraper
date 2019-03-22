@@ -15,7 +15,7 @@ TRACKER_URL = 'https://gamesdonequick.com/tracker'
 EVENTS_URL = TRACKER_URL + '/donations/'
 DONATIONS_URL = TRACKER_URL + '/donations/%s'
 
-ONGOING_EVENTS = ['agdq2019']
+ONGOING_EVENTS = []
 ONLY_EVENTS = ['agdq2019']
 ROWS_PER_PAGE = 50
 RATE_LIMIT_MESSAGE = 'You are being rate limited'
