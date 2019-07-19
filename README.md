@@ -11,17 +11,17 @@ pip install -r requirements.txt
 You don't have to run the scraper unless you want to add new data.
 The scraped data is already checked in as donations.db
 ```
-python scraper.py
+python3 scraper.py
 ```
 
 Then convert the SQLite database into an appropriate CSV file for display.
 ```
-python convert.py
+python3 convert.py
 ```
 
 Finally, view index.html, for example by using
 ```
-python -m SimpleHTTPServer
+python3 -m http.server
 ```
 
 ## Demo

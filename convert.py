@@ -30,7 +30,9 @@ STARTTIMES = {
 	'agdq2018':	'2018-01-07 16:00:00',
 	'sgdq2018':	'2018-06-24 14:30:00',
 	'GDQX2018':	'2018-10-26 16:50:00',
-	'agdq2019':	'2019-01-06 16:00:00'
+	'agdq2019':	'2019-01-06 16:00:00',
+	'sgdq2019': '2019-06-23 15:30:00',
+	#'GDQX2019': '',
 }
 
 with cur_db(db) as cur:
@@ -87,7 +89,7 @@ for event_slug, ticks in event_data.items():
 	assert(len(extended_ticks) == maxlen)
 	values.append(extended_ticks)
 
-with open('data.csv', 'wb') as fout:	
+with open('data.csv', 'w') as fout:	
 	csvwriter = csv.writer(fout)
 	headers = ['date'] + event_slugs
 	csvwriter.writerow(headers)

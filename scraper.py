@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 from requests import Request, Session
 import os
 import re
@@ -16,9 +16,9 @@ EVENTS_URL = TRACKER_URL + '/donations/'
 DONATIONS_URL = TRACKER_URL + '/donations/%s'
 
 ONGOING_EVENTS = []
-ONLY_EVENTS = ['agdq2019']
+ONLY_EVENTS = ['agdq2019', 'sgdq2019', 'GDQX2019']
 ROWS_PER_PAGE = 50
-RATE_LIMIT_MESSAGE = 'You are being rate limited'
+RATE_LIMIT_MESSAGE = b'You are being rate limited'
 SLEEP_AMOUNT = 3
 
 def assure_directories(directory):
@@ -67,7 +67,7 @@ def fetch_url_cached(url, force=False, **kwargs):
     request = Request('GET', url, **kwargs).prepare()
     url = request.url
     
-    cache_path = 'url_%s.html' % url.encode('hex')
+    cache_path = 'url_%s.html' % url.encode('ascii').hex()
     cached = fetch_cached(cache_path)
     
     if not cached or force:
